@@ -1,0 +1,4 @@
+#Fri Feb 03 13:19:39 IST 2023
+base.0=C\:\\Flutter Projects\\CashRichAssign\\cashrich\\build\\app\\intermediates\\dex\\release\\minifyReleaseWithR8\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

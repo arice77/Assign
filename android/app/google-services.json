@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "262172804835",
+    "project_id": "assign-c1e87",
+    "storage_bucket": "assign-c1e87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262172804835:android:77c1fafc19ef5a4d10a7d6",
+        "android_client_info": {
+          "package_name": "com.example.cashrich"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262172804835-1n2svors0pahvd5ff7ne1v4uk4l8tu75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwOJ6P8QOEq1dRvR5CGEE7WTj4_5eEFUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262172804835-1n2svors0pahvd5ff7ne1v4uk4l8tu75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

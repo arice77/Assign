@@ -7,9 +7,6 @@ class Btc {
     required this.numMarketPairs,
     required this.dateAdded,
     required this.tags,
-    required this.maxSupply,
-    required this.circulatingSupply,
-    required this.totalSupply,
     required this.isActive,
     this.platform,
     required this.cmcRank,
@@ -27,9 +24,6 @@ class Btc {
   int numMarketPairs;
   DateTime dateAdded;
   List<String> tags;
-  int maxSupply;
-  int circulatingSupply;
-  int totalSupply;
   int isActive;
   dynamic platform;
   int cmcRank;
@@ -47,9 +41,6 @@ class Btc {
         numMarketPairs: json["num_market_pairs"],
         dateAdded: DateTime.parse(json["date_added"]),
         tags: List<String>.from(json["tags"].map((x) => x)),
-        maxSupply: json["max_supply"],
-        circulatingSupply: json["circulating_supply"],
-        totalSupply: json["total_supply"],
         isActive: json["is_active"],
         platform: json["platform"],
         cmcRank: json["cmc_rank"],
