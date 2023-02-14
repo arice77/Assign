@@ -1,11 +1,15 @@
 import 'package:cashrich/Model/model.dart';
 import 'package:cashrich/Provider/data_provider.dart';
+import 'package:cashrich/Screens/search_screen.dart';
 import 'package:cashrich/Services/api_services.dart';
+import 'package:cashrich/Services/firebase_services.dart';
+import 'package:cashrich/Widgets/coin_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+  static String routeName = '/home-screen';
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -14,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   ApiService apiService = ApiService();
   bool isLoading = true;
+  AuthService authService = AuthService();
 
   Btc btc = Btc(
     id: 0,
@@ -23,9 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
     numMarketPairs: 0,
     dateAdded: DateTime.now(),
     tags: [],
-    maxSupply: 0,
-    circulatingSupply: 0,
-    totalSupply: 0,
     isActive: 0,
     cmcRank: 0,
     isFiat: 0,
@@ -50,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     final coinRichData = Provider.of<DataProvide>(context, listen: false);
-    coinRichData.initialize();
+    coinRichData.initialize(null);
   }
 
   @override
@@ -62,6 +64,21 @@ class _HomeScreenState extends State<HomeScreen> {
       usd = coinRichData.data!.usd;
     }
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, SearchScreen.routeName);
+        },
+        backgroundColor: const Color.fromARGB(
+          255,
+          245,
+          220,
+          1,
+        ),
+        child: const Icon(
+          Icons.search,
+          color: Colors.black,
+        ),
+      ),
       backgroundColor: const Color.fromARGB(
         255,
         54,
@@ -69,6 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
         50,
       ),
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                authService.signOut(context);
+              },
+              icon: const Icon(Icons.logout))
+        ],
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(0, 1, 1, 100),
         title: const Text(
@@ -89,93 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           : Column(
               children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10)),
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            btc.name,
-                            style: const TextStyle(
-                                fontSize: 21,
-                                color: Color.fromARGB(
-                                  255,
-                                  245,
-                                  220,
-                                  1,
-                                ),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            width: 40,
-                          ),
-                          usd.percentChange24H > 0
-                              ? const Icon(
-                                  Icons.arrow_drop_up_sharp,
-                                  color: Colors.green,
-                                )
-                              : const Icon(
-                                  Icons.arrow_drop_down_sharp,
-                                  color: Colors.red,
-                                ),
-                          Text(
-                            '${usd.percentChange24H.toStringAsFixed(2)}%',
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 15),
-                          ),
-                          const Spacer(),
-                          Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 2, horizontal: 19),
-                              color: const Color.fromARGB(
-                                255,
-                                49,
-                                49,
-                                48,
-                              ),
-                              child: Text(
-                                btc.symbol,
-                                style: const TextStyle(color: Colors.white),
-                              ))
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'Price   \$ ${usd.price.toStringAsFixed(2)}',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(
-                            width: 23,
-                          ),
-                          Text(
-                            'Rank     ${btc.cmcRank}',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          const Spacer(),
-                          const Icon(
-                            Icons.arrow_circle_right_rounded,
-                            color: Color.fromARGB(255, 250, 226, 1),
-                            size: 34,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )
+                CoinContainer(btc: btc, usd: usd),
               ],
             ),
     );
