@@ -2,6 +2,7 @@ import 'package:cashrich/Provider/data_provider.dart';
 import 'package:cashrich/Screens/auth_screen.dart';
 import 'package:cashrich/Screens/home_screen.dart';
 import 'package:cashrich/Screens/search_screen.dart';
+import 'package:cashrich/Services/firebase_services.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,22 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  bool isLoggedin = await AuthService().loginStatus();
+  runApp(MyApp(
+    isLogin: isLoggedin,
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  bool isLogin;
+  MyApp({super.key, required this.isLogin});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -30,7 +41,7 @@ class MyApp extends StatelessWidget {
         },
         debugShowCheckedModeBanner: false,
         title: 'CoinRich',
-        home: const AuthScreen(),
+        home: widget.isLogin ? const HomeScreen() : const AuthScreen(),
       ),
     );
   }
