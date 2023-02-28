@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final bool isInitailized;
+  const HomeScreen({super.key, required this.isInitailized});
   static String routeName = '/home-screen';
 
   @override
@@ -51,8 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    final coinRichData = Provider.of<DataProvide>(context, listen: false);
-    coinRichData.initialize(null);
+    if (!widget.isInitailized) {
+      final coinRichData = Provider.of<DataProvide>(context, listen: false);
+      coinRichData.initialize(null);
+    }
   }
 
   @override

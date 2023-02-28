@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:auth_buttons/auth_buttons.dart';
 import 'package:cashrich/Screens/home_screen.dart';
 import 'package:cashrich/Services/firebase_services.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +19,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final UniqueKey _email = UniqueKey();
   final UniqueKey _pass = UniqueKey();
   final _formKey = GlobalKey<FormState>();
-  var result;
+
+  dynamic result;
   final AuthService _authService = AuthService();
   bool isLoading = false;
 
@@ -139,6 +143,13 @@ class _AuthScreenState extends State<AuthScreen> {
                         _isSignUp ? 'Sign Up' : 'Login',
                         style: const TextStyle(color: Colors.black),
                       )),
+              GoogleAuthButton(onPressed: () async {
+                final res = await _authService.googleSignin();
+                if (res) {
+                  Navigator.of(context)
+                      .pushReplacementNamed(HomeScreen.routeName);
+                }
+              }),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

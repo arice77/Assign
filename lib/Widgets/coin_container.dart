@@ -1,6 +1,7 @@
 import 'package:cashrich/Model/model.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CoinContainer extends StatelessWidget {
   Usd usd;
   Btc btc;

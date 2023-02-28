@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cashrich/Screens/auth_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
@@ -54,5 +57,18 @@ class AuthService {
   Future<bool> loginStatus() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getBool(login) ?? false;
+  }
+
+  Future<bool> googleSignin() async {
+    GoogleSignIn googleSignIn = GoogleSignIn();
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    try {
+      await googleSignIn.signIn();
+      await pref.setBool(login, true);
+      return true;
+    } catch (e) {
+      debugPrint('Something went wrong');
+    }
+    return false;
   }
 }

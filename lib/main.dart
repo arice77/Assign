@@ -20,6 +20,7 @@ void main() async {
   ));
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatefulWidget {
   bool isLogin;
   MyApp({super.key, required this.isLogin});
@@ -35,13 +36,18 @@ class _MyAppState extends State<MyApp> {
       create: (_) => DataProvide(),
       child: MaterialApp(
         routes: {
-          HomeScreen.routeName: (context) => const HomeScreen(),
+          HomeScreen.routeName: (context) =>
+              const HomeScreen(isInitailized: false),
           SearchScreen.routeName: (context) => const SearchScreen(),
           AuthScreen.routeName: (context) => const AuthScreen(),
         },
         debugShowCheckedModeBanner: false,
         title: 'CoinRich',
-        home: widget.isLogin ? const HomeScreen() : const AuthScreen(),
+        home: widget.isLogin
+            ? const HomeScreen(
+                isInitailized: false,
+              )
+            : const AuthScreen(),
       ),
     );
   }

@@ -6,6 +6,7 @@ class DataProvide extends ChangeNotifier {
   CoinRichData? data;
 
   bool isLoading = false;
+
   initialize(String? search) async {
     isLoading = true;
     data = await ApiService().getData(search);

@@ -51,7 +51,9 @@ class _SearchScreenState extends State<SearchScreen> {
     final coinRichData = Provider.of<DataProvide>(context, listen: false);
 
     coinRichData.initialize(search);
-    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const HomeScreen(isInitailized: true),
+    ));
   }
 
   @override
